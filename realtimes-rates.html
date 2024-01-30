@@ -151,8 +151,7 @@
         .polly-logo-border {
             position: absolute;
             bottom: -13px;
-            right: 0%;
-            transform: translateX(-100%);
+            right: 10px;
             background-color: #e5e2de;
             padding: 0 10px;
             z-index: 2;
@@ -171,9 +170,6 @@
             .card {
                 width: 100%; /* Full width on mobile */
             }
-            .polly-logo-border {
-                transform: translateX(-10%);
-            }
         }
     </style>
 
@@ -187,7 +183,7 @@
     <div class="cards-container">
         <div class="card" id="mortgageRates">
           <div class="header">
-            MORTGAGE RATES
+            30-YEAR FIXED MORTGAGE RATE
             <span class="tooltip-icon">
               <div class="tooltip-icon-content">
                 <span class="tooltip-icon-text">30-year Conforming based on latest Polly data</span>
@@ -224,21 +220,29 @@
         fetch('https://rt-search.onrender.com/polly-rates')
             .then(response => response.json())
             .then(data => {
-                console.log("conforming_30", data);
-                if (data) {
-                    const { conforming_30 } = data;
-                    updateCard('mortgageRates', `${conforming_30}%`, formatChange(0, 3), false);
+                if (Array.isArray(data)) {
+                    // Find the '30 YEAR CONFORMING' product
+                    const conforming_30 = data.find(item => item.product === '30 YEAR CONFORMING');
+                    
+                    if (conforming_30) {
+                        console.log("conforming_30", conforming_30);
+                        console.log("avg", conforming_30.average_rate_today);
+                        updateCard('mortgageRates', `${conforming_30.average_rate_today}%`, formatChange(parseFloat(conforming_30.last_close_day_delta), 3), false);
+                    } else {
+                        console.log('30 YEAR CONFORMING product not found');
+                    }
+                } else {
+                    console.log('Invalid data format received');
                 }
             })
             .catch(error => console.error('Error fetching Polly mortgage rates:', error));
     }
 
+
     // Fetch data from the server
     fetch('https://realtime-rates-server.onrender.com/api/data')
         .then(response => response.json())
         .then(apiData => {
-            console.log("Data fetched", apiData);
-
             // Process and display data for each card
 
             // Update Inventory Card
@@ -249,12 +253,6 @@
                 const inventoryChange = apiData.inventoryData.change;
                 updateCard('inventory', latestValue.toLocaleString(), formatChange(inventoryChange));
             }
-
-            
-
-            // Other cards (CHPI, Purchase App Data) can be updated similarly
-            updateCard('chpi', '$376,090', formatChange(-1771, 0));
-            // updateCard('purchaseAppData', 'Value', 'Change');
         })
         .catch(error => console.error('Error fetching data:', error));
 
