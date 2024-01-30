@@ -42,6 +42,7 @@
 
         .cards-container {
             display: flex;
+            flex-wrap: wrap; /* Allows cards to wrap onto the next line on smaller screens */
             justify-content: space-between;
             margin-top: 20px;
         }
@@ -50,12 +51,12 @@
             position: relative;
             border: 1px solid black;
             padding: 20px;
-            width: calc(25% - 10px);
             box-sizing: border-box;
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
+            width: calc(50% - 10px); /* 50% width minus margin */
         }
 
         .header {
@@ -148,9 +149,9 @@
 
         .polly-logo-border {
             position: absolute;
-            bottom: -12px;
-            left: 0%;
-            transform: translateX(200%);
+            bottom: -13px;
+            right: 0%;
+            transform: translateX(-100%);
             background-color: #e5e2de;
             padding: 0 10px;
             z-index: 2;
@@ -162,22 +163,9 @@
             object-fit: contain; /* This makes sure that the aspect ratio is maintained */
         }
 
-        /* Media Query for screen widths less than 1340px */
-        @media screen and (max-width: 1340px) {
-            .cards-container {
-                overflow-x: auto;
-                width: 100%;
-            }
-
+       @media screen and (max-width: 767px) {
             .card {
-                flex: 0 0 325px; /* This provides a fixed width of 325px */
-                margin-right: 10px;
-            }
-
-            .cards-container::after {
-                content: "";
-                width: 10px;
-                flex: 0 0 10px;
+                width: 100%; /* Full width on mobile */
             }
         }
     </style>
@@ -220,38 +208,6 @@
               <div class="loading" id="loadingDiv">Loading...</div>
             </div>
         </div>
-
-        <div class="card" id="chpi">
-          <div class="header">
-            CHPI
-            <span class="tooltip-icon">
-              <div class="tooltip-icon-content">
-                <span class="tooltip-icon-text">Description about Common Haus Price Index.</span>
-                <span class="tooltip-icon-powered">Powered by Polly</span>
-              </div>
-            </span>
-          </div>
-          <div class="data">
-            <div class="loading" id="loadingDiv">Loading...</div>
-          </div>
-        </div>
-
-        <div class="card" id="purchaseAppData">
-          <div class="header">
-            PURCHASE APP DATA
-            <span class="tooltip-icon">
-              <div class="tooltip-icon-content">
-                <span class="tooltip-icon-text">Description about Purchase App Data.</span>
-                <span class="tooltip-icon-powered">Powered by Polly</span>
-              </div>
-            </span>
-          </div>
-          <div class="data">
-            <div class="loading" id="loadingDiv">Loading...</div>
-          </div>
-        </div>
-    </div>
-
     <div id="global-tooltip" class="global-tooltip-icon-content" style="position: fixed; display: none;"></div>
 
 
