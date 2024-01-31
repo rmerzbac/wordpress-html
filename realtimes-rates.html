@@ -104,6 +104,7 @@
 	}
 
 	.tooltip-icon {
+		text-transform: lowercase;
 		position: relative;
 		display: inline-block;
 		cursor: pointer;
@@ -161,12 +162,22 @@
 		object-fit: contain; /* This makes sure that the aspect ratio is maintained */
 	}
 
+	.mobile-text {
+		display: none;
+	}
+
 	@media screen and (max-width: 767px) {
 		.market-glimpse-container {
 			font-size: 12px;
 		}
 		.card {
 			width: 100%; /* Full width on mobile */
+		}
+		.desktop-text {
+			display: none;
+		}
+		.mobile-text {
+			display: inline-block;
 		}
 	}
 </style>
@@ -180,11 +191,13 @@
 	<div class="cards-container">
 		<div class="card" id="mortgageRates">
 			<div class="header">
-				30-YEAR FIXED MORTGAGE RATE
+				<span class="desktop-text">30-Year Fixed Mortgage Rate</span
+				><span class="mobile-text">30-Year Fixed Mortgage</span>
 				<span class="tooltip-icon">
 					<div class="tooltip-icon-content">
 						<span class="tooltip-icon-text"
-							>30-year Conforming based on latest Polly data</span
+							>30-Year fixed (conforming). Updated hourly during market
+							hours.</span
 						>
 						<span class="tooltip-icon-powered"
 							><img
@@ -207,7 +220,7 @@
 
 		<div class="card" id="inventory">
 			<div class="header">
-				INVENTORY
+				Inventory
 				<span class="tooltip-icon">
 					<div class="tooltip-icon-content">
 						<span class="tooltip-icon-text"

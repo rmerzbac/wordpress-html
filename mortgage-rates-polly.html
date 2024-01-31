@@ -3,7 +3,7 @@
 		font-family: Arial, sans-serif;
 		margin: 20px 0;
 		background-color: #f8f7f4;
-		font-size: 13px;
+		font-size: 12.5px;
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -84,7 +84,7 @@
 	span.positive,
 	span.negative {
 		padding: 0px;
-		padding-left: 12px;
+		padding-left: 8px;
 	}
 
 	.change.positive {
@@ -101,6 +101,27 @@
 
 	.card.negative {
 		border-color: #d3a7a5; /* Light red */
+	}
+
+	#mobile-rates-container {
+		display: none;
+	}
+
+	.mobile-card {
+		position: relative;
+		border: 1px solid #828282;
+		padding: 20px;
+		width: 100%;
+		box-sizing: border-box;
+		display: block;
+		align-items: center;
+		margin-bottom: 12px;
+		line-height: 1.5;
+	}
+
+	.mobile-data {
+		display: flex;
+		justify-content: space-between;
 	}
 
 	/* Media Query for screen widths less than 1340px */
@@ -127,6 +148,12 @@
 	}
 
 	@media screen and (max-width: 450px) {
+		#desktop-rates-container {
+			display: none;
+		}
+		#mobile-rates-container {
+			display: block;
+		}
 		.market-glimpse-inner-container {
 			width: 100%;
 		}
@@ -146,7 +173,7 @@
 			/>
 		</div>
 
-		<div class="cards-container">
+		<div class="cards-container" id="desktop-rates-container">
 			<div class="card" id="conforming30">
 				<div class="header">30-YR. CONFORMING</div>
 				<div class="data">
@@ -172,6 +199,35 @@
 				<div class="header">30-YR. FHA</div>
 				<div class="data">
 					<div class="loading" id="loadingDiv">Loading...</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="cards-container" id="mobile-rates-container">
+			<div class="mobile-card">
+				<div class="mobile-data" id="conforming30">
+					<div class="header">30-YR. CONFORMING</div>
+					<div class="data">
+						<div class="loading" id="loadingDiv">Loading...</div>
+					</div>
+				</div>
+				<div class="mobile-data" id="conforming15">
+					<div class="header">15-YR. CONFORMING</div>
+					<div class="data">
+						<div class="loading" id="loadingDiv">Loading...</div>
+					</div>
+				</div>
+				<div class="mobile-data jumbo" id="jumbo30">
+					<div class="header">30-YR. JUMBO</div>
+					<div class="data">
+						<div class="loading" id="loadingDiv">Loading...</div>
+					</div>
+				</div>
+				<div class="mobile-data" id="fha30">
+					<div class="header">30-YR. FHA</div>
+					<div class="data">
+						<div class="loading" id="loadingDiv">Loading...</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -236,14 +292,36 @@
 		function updateCard(cardId, value, change, isIncreaseGood = true) {
 			const increase = isIncreaseGood ? "positive" : "negative";
 			const decrease = isIncreaseGood ? "negative" : "positive";
+
+			// Update standard card
 			const cardElement = document.getElementById(cardId);
-			cardElement.classList.add(change.startsWith("−") ? decrease : increase);
 			if (cardElement) {
-				const dataElement = cardElement.querySelector(".data");
-				dataElement.innerHTML = `<span>${value}</span> <span class="change ${
-					change.startsWith("−") ? decrease : increase
-				}">${change}</span>`;
+				updateCardContent(cardElement, value, change, increase, decrease);
 			}
+
+			// Update mobile card
+			const mobileCardElements = document.querySelectorAll(
+				`.mobile-data[id="${cardId}"]`
+			);
+			mobileCardElements.forEach((mobileCardElement) => {
+				if (mobileCardElement) {
+					updateCardContent(
+						mobileCardElement,
+						value,
+						change,
+						increase,
+						decrease
+					);
+				}
+			});
+		}
+
+		function updateCardContent(cardElement, value, change, increase, decrease) {
+			cardElement.classList.add(change.startsWith("−") ? decrease : increase);
+			const dataElement = cardElement.querySelector(".data");
+			dataElement.innerHTML = `<span>${value}</span> <span class="change ${
+				change.startsWith("−") ? decrease : increase
+			}">${change}</span>`;
 		}
 
 		function formatChange(changeValue, decimals = 0) {
