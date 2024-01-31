@@ -115,6 +115,10 @@
 			margin-right: 10px;
 		}
 
+		.last-card {
+			margin-right: 0px;
+		}
+
 		.cards-container::after {
 			content: "";
 			width: 10px;
@@ -123,7 +127,7 @@
 	}
 
 	@media screen and (max-width: 450px) {
-		.market-glimpse-container {
+		.market-glimpse-inner-container {
 			width: 100%;
 		}
 		.main-header img {
@@ -164,7 +168,7 @@
 				</div>
 			</div>
 
-			<div class="card" id="fha30">
+			<div class="card last-card" id="fha30">
 				<div class="header">30-YR. FHA</div>
 				<div class="data">
 					<div class="loading" id="loadingDiv">Loading...</div>
