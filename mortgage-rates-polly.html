@@ -1,273 +1,317 @@
 <style>
-        .market-glimpse-container {
-            font-family: Arial, sans-serif;
-            margin: 20px 0;
-            background-color: #f8f7f4;
-            font-size: 13px;
-        }
+	.market-glimpse-container {
+		font-family: Arial, sans-serif;
+		margin: 20px 0;
+		background-color: #f8f7f4;
+		font-size: 13px;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
 
-        .main-header {
-            display: flex;
-            justify-content: end;
-            align-items: center;
-            position: relative;
-            font-size: 16px;
-        }
+	.market-glimpse-inner-container {
+		width: 90%;
+		max-width: 1200px;
+	}
 
-        .main-header img {
-            height: 36px;
-            margin-right: 24px;
-        }
+	.main-header {
+		display: flex;
+		justify-content: end;
+		align-items: center;
+		position: relative;
+		font-size: 16px;
+	}
 
-        .line {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            border-top: 1px solid #a6a6a6;
-            z-index: 0;
-        }
+	.main-header img {
+		height: 36px;
+		margin-right: 24px;
+	}
 
-        .market-glimpse,
-        .powered {
-            z-index: 1;
-            background-color: #f8f7f4;
-            padding: 0 10px;
-        }
+	.line {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		border-top: 1px solid #a6a6a6;
+		z-index: 0;
+	}
 
-        .powered {
-            color: #a6a6a6;
-            font-size: 12px;
-        }
+	.market-glimpse,
+	.powered {
+		z-index: 1;
+		background-color: #f8f7f4;
+		padding: 0 10px;
+	}
 
-        .market-glimpse {
-            font-weight: bold;
-            margin-left: 25px;
-            margin-right: 5px;
-        }
+	.powered {
+		color: #a6a6a6;
+		font-size: 12px;
+	}
 
-        .cards-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+	.market-glimpse {
+		font-weight: bold;
+		margin-left: 25px;
+		margin-right: 5px;
+	}
 
-        .card {
-            position: relative;
-            border: 1px solid black;
-            padding: 20px;
-            width: calc(25% - 10px);
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
+	.cards-container {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 20px;
+	}
 
-        .header {
-            color: #828282;
-        }
+	.card {
+		position: relative;
+		border: 1px solid black;
+		padding: 20px;
+		width: calc(25% - 10px);
+		box-sizing: border-box;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 12px;
+	}
 
-        .data {
-            font-weight: 600;
-        }
+	.header {
+		color: #828282;
+	}
 
-        span.positive,
-        span.negative {
-            padding: 0px;
-            padding-left: 12px;
-        }
+	.data {
+		font-weight: 600;
+	}
 
+	span.positive,
+	span.negative {
+		padding: 0px;
+		padding-left: 12px;
+	}
 
+	.change.positive {
+		color: #287713; /* Green */
+	}
 
-        .change.positive {
-            color: #287713; /* Green */
-        }
+	.change.negative {
+		color: #dd3441; /* Red */
+	}
 
-        .change.negative {
-            color: #dd3441; /* Red */
-        }
+	.card.positive {
+		border-color: #aab99f; /* Light green */
+	}
 
-        .card.positive {
-            border-color: #aab99f; /* Light green */
-        }
+	.card.negative {
+		border-color: #d3a7a5; /* Light red */
+	}
 
-        .card.negative {
-            border-color: #d3a7a5; /* Light red */
-        }
+	/* Media Query for screen widths less than 1340px */
+	@media screen and (max-width: 1340px) {
+		.cards-container {
+			overflow-x: auto;
+			width: 100%;
+		}
 
-        /* Media Query for screen widths less than 1340px */
-        @media screen and (max-width: 1340px) {
-            .cards-container {
-                overflow-x: auto;
-                width: 100%;
-            }
+		.card {
+			flex: 0 0 325px; /* This provides a fixed width of 325px */
+			margin-right: 10px;
+		}
 
-            .card {
-                flex: 0 0 325px; /* This provides a fixed width of 325px */
-                margin-right: 10px;
-            }
+		.cards-container::after {
+			content: "";
+			width: 10px;
+			flex: 0 0 10px;
+		}
+	}
 
-            .cards-container::after {
-                content: "";
-                width: 10px;
-                flex: 0 0 10px;
-            }
-        }
-
-        @media screen and (max-width: 450px) {
-            .main-header img {
-                height: 24px;
-                margin-right: 0px;
-            }
-        }
-    </style>
+	@media screen and (max-width: 450px) {
+		.market-glimpse-container {
+			width: 100%;
+		}
+		.main-header img {
+			height: 24px;
+			margin-right: 0px;
+		}
+	}
+</style>
 
 <div class="market-glimpse-container">
-    <div class="main-header">
-        <img src="https://www.housingwire.com/wp-content/uploads/2024/01/Powered-by-Polly-dark.png" alt="Polly" />
-    </div>
+	<div class="market-glimpse-inner-container">
+		<div class="main-header">
+			<img
+				src="https://www.housingwire.com/wp-content/uploads/2024/01/Powered-by-Polly-dark.png"
+				alt="Polly"
+			/>
+		</div>
 
-    <div class="cards-container">
-        <div class="card" id="conforming30">
-          <div class="header">
-            30-YR. CONFORMING
-          </div>
-          <div class="data">
-            <div class="loading" id="loadingDiv">Loading...</div>
-          </div>
-        </div>
+		<div class="cards-container">
+			<div class="card" id="conforming30">
+				<div class="header">30-YR. CONFORMING</div>
+				<div class="data">
+					<div class="loading" id="loadingDiv">Loading...</div>
+				</div>
+			</div>
 
-        <div class="card" id="conforming15">
-          <div class="header">
-            15-YR. CONFORMING
-          </div>
-          <div class="data">
-            <div class="loading" id="loadingDiv">Loading...</div>
-          </div>
-        </div>
+			<div class="card" id="conforming15">
+				<div class="header">15-YR. CONFORMING</div>
+				<div class="data">
+					<div class="loading" id="loadingDiv">Loading...</div>
+				</div>
+			</div>
 
-        <div class="card" id="jumbo30">
-          <div class="header">
-            30-YR. JUMBO
-          </div>
-          <div class="data">
-            <div class="loading" id="loadingDiv">Loading...</div>
-          </div>
-        </div>
+			<div class="card" id="jumbo30">
+				<div class="header">30-YR. JUMBO</div>
+				<div class="data">
+					<div class="loading" id="loadingDiv">Loading...</div>
+				</div>
+			</div>
 
-        <div class="card" id="fha30">
-          <div class="header">
-            30-YR. FHA
-          </div>
-          <div class="data">
-            <div class="loading" id="loadingDiv">Loading...</div>
-          </div>
-        </div>
-    </div>
+			<div class="card" id="fha30">
+				<div class="header">30-YR. FHA</div>
+				<div class="data">
+					<div class="loading" id="loadingDiv">Loading...</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<script>
+		function fetchPollyMortgageRates() {
+			console.log("fetching.....");
+			fetch("https://rt-search.onrender.com/polly-rates")
+				.then((response) => response.json())
+				.then((data) => {
+					if (Array.isArray(data)) {
+						// Find the specific products in the data array
+						const conforming30 = data.find(
+							(item) => item.product === "30 YEAR CONFORMING"
+						);
+						const conforming15 = data.find(
+							(item) => item.product === "15 YEAR CONFORMING"
+						);
+						const jumbo30 = data.find(
+							(item) => item.product === "30 YEAR JUMBO"
+						);
+						const fha30 = data.find((item) => item.product === "30 YEAR FHA");
 
-    <script>
+						// Update the cards with the found data
+						if (conforming30)
+							updateCard(
+								"conforming30",
+								`${conforming30.average_rate_today}%`,
+								formatChange(parseFloat(conforming30.last_close_day_delta), 3),
+								false
+							);
+						if (conforming15)
+							updateCard(
+								"conforming15",
+								`${conforming15.average_rate_today}%`,
+								formatChange(parseFloat(conforming15.last_close_day_delta), 3),
+								false
+							);
+						if (jumbo30)
+							updateCard(
+								"jumbo30",
+								`${jumbo30.average_rate_today}%`,
+								formatChange(parseFloat(jumbo30.last_close_day_delta), 3),
+								false
+							);
+						if (fha30)
+							updateCard(
+								"fha30",
+								`${fha30.average_rate_today}%`,
+								formatChange(parseFloat(fha30.last_close_day_delta)),
+								false
+							);
+					}
+				})
+				.catch((error) =>
+					console.error("Error fetching Polly mortgage rates:", error)
+				);
+		}
 
-    function fetchPollyMortgageRates() {
-        console.log("fetching.....");
-        fetch('https://rt-search.onrender.com/polly-rates')
-            .then(response => response.json())
-            .then(data => {
-                if (Array.isArray(data)) {
-                    // Find the specific products in the data array
-                    const conforming30 = data.find(item => item.product === '30 YEAR CONFORMING');
-                    const conforming15 = data.find(item => item.product === '15 YEAR CONFORMING');
-                    const jumbo30 = data.find(item => item.product === '30 YEAR JUMBO');
-                    const fha30 = data.find(item => item.product === '30 YEAR FHA');
+		// Function to update card data
+		function updateCard(cardId, value, change, isIncreaseGood = true) {
+			const increase = isIncreaseGood ? "positive" : "negative";
+			const decrease = isIncreaseGood ? "negative" : "positive";
+			const cardElement = document.getElementById(cardId);
+			cardElement.classList.add(change.startsWith("−") ? decrease : increase);
+			if (cardElement) {
+				const dataElement = cardElement.querySelector(".data");
+				dataElement.innerHTML = `<span>${value}</span> <span class="change ${
+					change.startsWith("−") ? decrease : increase
+				}">${change}</span>`;
+			}
+		}
 
-                    // Update the cards with the found data
-                    if (conforming30) updateCard('conforming30', `${conforming30.average_rate_today}%`, formatChange(parseFloat(conforming30.last_close_day_delta), 3), false);
-                    if (conforming15) updateCard('conforming15', `${conforming15.average_rate_today}%`, formatChange(parseFloat(conforming15.last_close_day_delta), 3), false);
-                    if (jumbo30) updateCard('jumbo30', `${jumbo30.average_rate_today}%`, formatChange(parseFloat(jumbo30.last_close_day_delta), 3), false);
-                    if (fha30) updateCard('fha30', `${fha30.average_rate_today}%`, formatChange(parseFloat(fha30.last_close_day_delta)), false);
-                }
-            })
-            .catch(error => console.error('Error fetching Polly mortgage rates:', error));
-    }
+		function formatChange(changeValue, decimals = 0) {
+			let formattedChange;
+			if (changeValue >= 0) {
+				formattedChange =
+					"+" +
+					(decimals === 0
+						? changeValue.toLocaleString()
+						: changeValue.toFixed(decimals));
+			} else {
+				// Using the actual minus sign (−) instead of a dash (-)
+				formattedChange =
+					"−" +
+					(decimals === 0
+						? Math.abs(changeValue).toLocaleString()
+						: Math.abs(changeValue).toFixed(decimals));
+			}
+			console.log("Formatted change", formattedChange);
+			return formattedChange;
+		}
 
+		document.addEventListener("DOMContentLoaded", function () {
+			fetchPollyMortgageRates();
+			const globalTooltip = document.getElementById("global-tooltip");
+			let debounceTimer;
 
-    // Function to update card data
-    function updateCard(cardId, value, change, isIncreaseGood = true) {
-        const increase = isIncreaseGood ? 'positive' : 'negative';
-        const decrease = isIncreaseGood ? 'negative' : 'positive';
-        const cardElement = document.getElementById(cardId);
-        cardElement.classList.add(change.startsWith('−') ? decrease : increase);
-        if (cardElement) {
-            const dataElement = cardElement.querySelector('.data');
-            dataElement.innerHTML = `<span>${value}</span> <span class="change ${change.startsWith('−') ? decrease : increase}">${change}</span>`;
-        }
-    }
+			document
+				.querySelectorAll(".tooltip-icon")
+				.forEach(function (tooltipIcon) {
+					tooltipIcon.addEventListener("mouseenter", function () {
+						clearTimeout(debounceTimer);
+						const tooltipContent = this.querySelector(
+							".tooltip-icon-content"
+						).innerHTML;
+						globalTooltip.innerHTML = tooltipContent;
+						globalTooltip.style.display = "block";
+						positionGlobalTooltip(globalTooltip, this);
+						setTimeout(() => {
+							globalTooltip.style.opacity = ".95";
+						}, 10); // Small delay for CSS transition
+					});
 
-    function formatChange(changeValue, decimals = 0) {
-        let formattedChange;
-        if (changeValue >= 0) {
-            formattedChange = '+' + (decimals === 0 ? changeValue.toLocaleString() : changeValue.toFixed(decimals));
-        } else {
-            // Using the actual minus sign (−) instead of a dash (-)
-            formattedChange = '−' + (decimals === 0 ? Math.abs(changeValue).toLocaleString() : Math.abs(changeValue).toFixed(decimals));
-        }
-        console.log("Formatted change", formattedChange);
-        return formattedChange;
-    }
+					tooltipIcon.addEventListener("mouseleave", function () {
+						debounceTimer = setTimeout(() => {
+							globalTooltip.style.display = "none";
+						}, 50); // Delay to prevent flickering
+					});
+				});
 
+			function positionGlobalTooltip(tooltip, triggerElement) {
+				const triggerRect = triggerElement.getBoundingClientRect();
+				const tooltipWidth = tooltip.offsetWidth;
+				const tooltipHeight = tooltip.offsetHeight;
 
-    document.addEventListener('DOMContentLoaded', function() {
-        fetchPollyMortgageRates();
-        const globalTooltip = document.getElementById('global-tooltip');
-        let debounceTimer;
+				// Calculate left position based on available screen space
+				let left;
+				if (triggerRect.right + tooltipWidth > window.innerWidth) {
+					// Position tooltip to the left of the icon if it goes off the screen
+					left = triggerRect.x - tooltipWidth - 30;
+				} else {
+					// Otherwise, position it to the right
+					left = triggerRect.x;
+				}
 
-        document.querySelectorAll('.tooltip-icon').forEach(function(tooltipIcon) {
-            tooltipIcon.addEventListener('mouseenter', function() {
-                clearTimeout(debounceTimer);
-                const tooltipContent = this.querySelector('.tooltip-icon-content').innerHTML;
-                globalTooltip.innerHTML = tooltipContent;
-                globalTooltip.style.display = 'block';
-                positionGlobalTooltip(globalTooltip, this);
-                setTimeout(() => {
-                    globalTooltip.style.opacity = '.95';
-                }, 10); // Small delay for CSS transition
-            });
+				// Calculate top position to place tooltip below or above the element
+				const top = triggerRect.top;
 
-            tooltipIcon.addEventListener('mouseleave', function() {
-                debounceTimer = setTimeout(() => {
-                    globalTooltip.style.display = 'none';
-                }, 50); // Delay to prevent flickering
-            });
-        });
-
-        function positionGlobalTooltip(tooltip, triggerElement) {
-            const triggerRect = triggerElement.getBoundingClientRect();
-            const tooltipWidth = tooltip.offsetWidth;
-            const tooltipHeight = tooltip.offsetHeight;
-
-            // Calculate left position based on available screen space
-            let left;
-            if (triggerRect.right + tooltipWidth > window.innerWidth) {
-                // Position tooltip to the left of the icon if it goes off the screen
-                left = triggerRect.x - tooltipWidth - 30;
-            } else {
-                // Otherwise, position it to the right
-                left = triggerRect.x;
-            }
-
-            // Calculate top position to place tooltip below or above the element
-            const top = triggerRect.top;
-
-            // Apply the calculated position
-            tooltip.style.left = `${left}px`;
-            tooltip.style.top = `${top}px`;
-        }
-
-    });
-
-
-    </script>
-
-  </div>
+				// Apply the calculated position
+				tooltip.style.left = `${left}px`;
+				tooltip.style.top = `${top}px`;
+			}
+		});
+	</script>
+</div>
