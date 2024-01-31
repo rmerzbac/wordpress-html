@@ -62,6 +62,7 @@
 
 	.header {
 		color: #828282;
+		text-transform: uppercase;
 	}
 
 	.data {
@@ -149,7 +150,7 @@
 
 	.polly-logo-border {
 		position: absolute;
-		bottom: -13px;
+		bottom: -9px;
 		right: 10px;
 		background-color: #e5e2de;
 		padding: 0 10px;
@@ -162,22 +163,15 @@
 		object-fit: contain; /* This makes sure that the aspect ratio is maintained */
 	}
 
-	.mobile-text {
-		display: none;
-	}
-
 	@media screen and (max-width: 767px) {
 		.market-glimpse-container {
-			font-size: 12px;
+			font-size: 11.5px;
 		}
 		.card {
 			width: 100%; /* Full width on mobile */
 		}
-		.desktop-text {
-			display: none;
-		}
-		.mobile-text {
-			display: inline-block;
+		.header {
+			text-transform: capitalize;
 		}
 	}
 </style>
@@ -191,12 +185,11 @@
 	<div class="cards-container">
 		<div class="card" id="mortgageRates">
 			<div class="header">
-				<span class="desktop-text">30-Year Fixed Mortgage Rate</span
-				><span class="mobile-text">30-Year Fixed Mortgage</span>
+				<span>30-Year Fixed Mortgage Rate</span>
 				<span class="tooltip-icon">
 					<div class="tooltip-icon-content">
 						<span class="tooltip-icon-text"
-							>30-Year fixed (conforming). Updated hourly during market
+							>30-Yr. Fixed Conforming. Updated hourly during market
 							hours.</span
 						>
 						<span class="tooltip-icon-powered"
@@ -212,7 +205,7 @@
 			</div>
 			<div class="polly-logo-border">
 				<img
-					src="https://www.housingwire.com/wp-content/uploads/2024/01/Powered-by-Polly-dark.png"
+					src="https://www.housingwire.com/wp-content/uploads/2024/01/Polly_Dark.png"
 					alt="Polly"
 				/>
 			</div>
