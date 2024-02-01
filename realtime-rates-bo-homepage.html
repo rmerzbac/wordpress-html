@@ -256,7 +256,7 @@
 			<div
 				id="global-tooltip"
 				class="global-tooltip-icon-content"
-				style="position: fixed; display: none"
+				style="position: fixed"
 			></div>
 
 			<script>
@@ -326,9 +326,7 @@
 					);
 					if (cardElement) {
 						const dataElement = cardElement.querySelector(".data");
-						dataElement.innerHTML = `<span>${value}</span> <span class="change ${
-							change.startsWith("−") ? decrease : increase
-						}">${change}</span>`;
+						dataElement.innerHTML = `<span>${value}</span> <span>${change}</span>`;
 					}
 				}
 
@@ -379,6 +377,15 @@
 								}, 50); // Delay to prevent flickering
 							});
 						});
+
+					// Hide tooltip on scroll
+					window.addEventListener(
+						"scroll",
+						function () {
+							globalTooltip.style.display = "none";
+						},
+						{ passive: true }
+					);
 
 					function positionGlobalTooltip(tooltip, triggerElement) {
 						const triggerRect = triggerElement.getBoundingClientRect();
