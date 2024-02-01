@@ -163,7 +163,12 @@
 		object-fit: contain; /* This makes sure that the aspect ratio is maintained */
 	}
 
-	@media screen and (max-width: 767px) {
+	@media screen and (max-width: 1000px) {
+		.market-glimpse-container {
+			font-size: 12px;
+		}
+	}
+	@media screen and (max-width: 800px) {
 		.market-glimpse-container {
 			font-size: 11.5px;
 		}
@@ -172,6 +177,10 @@
 		}
 		.header {
 			text-transform: capitalize;
+		}
+		span.positive,
+		span.negative {
+			padding-left: 8px;
 		}
 	}
 </style>
