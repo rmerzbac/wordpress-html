@@ -1,0 +1,165 @@
+#market-glimpse { width: 100%; padding: 20px; display: flex; justify-content:
+center; } .market-glimpse-container { width: 100%; max-width: 1500px;
+font-family: Arial, sans-serif; margin: 20px 0; background-color: #e5e2de;
+font-size: 16px; } .main-header { display: flex; justify-content: space-between;
+align-items: center; position: relative; } .line { content: ""; position:
+absolute; top: 50%; left: 0; right: 0; border-top: 1px solid #a6a6a6; z-index:
+0; } .market-glimpse, .powered { z-index: 1; background-color: #e5e2de; padding:
+0 10px; } .powered { color: #a6a6a6; font-size: 12px; } .market-glimpse {
+font-weight: bold; margin-left: 25px; margin-right: 5px; } .cards-container {
+display: flex; flex-wrap: wrap; /* Allows cards to wrap onto the next line on
+smaller screens */ justify-content: space-between; margin-top: 20px; } .card {
+position: relative; border: 1px solid black; padding: 20px; box-sizing:
+border-box; display: flex; justify-content: space-between; align-items: center;
+margin-bottom: 12px; width: calc(50% - 10px); /* 50% width minus margin */ }
+.header { color: #828282; text-transform: uppercase; } .data { font-weight: 600;
+} span.positive, span.negative { padding: 0px; padding-left: 12px; }
+.change.positive { color: #287713; /* Green */ } .change.negative { color:
+#dd3441; /* Red */ } .card.positive { border-color: #aab99f; /* Light green */ }
+.card.negative { border-color: #d3a7a5; /* Light red */ } .tooltip-icon::before
+{ content: "i"; display: inline-block; width: 20px; height: 20px; border-radius:
+50%; background-color: #828282; color: white; text-align: center; line-height:
+20px; font-style: normal; } .tooltip-icon { text-transform: lowercase; position:
+relative; display: inline-block; cursor: pointer; } .tooltip-icon-content {
+display: none; } .global-tooltip-icon-content { margin: 25px; width: 230px;
+background-color: #1c1f22; color: #fff; text-align: left; padding: 20px;
+position: absolute; z-index: 1; top: 0; opacity: 0; transition: opacity 0.3s; }
+.tooltip-icon-powered { display: block; text-align: right; font-style: italic;
+margin-top: 12px; } .tooltip-icon-powered img { height: 24px; }
+.tooltip-icon-text { text-align: left; } #global-tooltip { z-index: 1000; }
+.polly-logo-border { position: absolute; bottom: -9px; right: 10px;
+background-color: #e5e2de; padding: 0 10px; z-index: 2; } .polly-logo-border img
+{ height: auto; /* or your desired value */ width: 80px; /* or your desired
+value */ object-fit: contain; /* This makes sure that the aspect ratio is
+maintained */ } @media screen and (max-width: 1000px) {
+.market-glimpse-container { font-size: 12px; } } @media screen and (max-width:
+800px) { .market-glimpse-container { font-size: 13px; } .card { width: 100%; /*
+Full width on mobile */ } .header { text-transform: capitalize; } span.positive,
+span.negative { padding-left: 8px; } } @media screen and (max-width: 450px) {
+.market-glimpse-container { font-size: 11.5px; } .global-tooltip-icon-content {
+width: 180px; } }
+
+<div id="market-glimpse">
+	<div class="market-glimpse-container">
+		<div class="main-header">
+			<span class="market-glimpse">Market Glimpse</span>
+			<div class="line"></div>
+		</div>
+
+		<div class="cards-container">
+			<div class="card" id="mortgageRates">
+				<div class="header">
+					<span>30-Yr Fixed Mortgage Rate</span>
+					<span class="tooltip-icon">
+						<div class="tooltip-icon-content">
+							<span class="tooltip-icon-text"
+								>30-Yr. Fixed Conforming. Updated hourly during market
+								hours.</span
+							>
+							<span class="tooltip-icon-powered"
+								><img
+									src="https://www.housingwire.com/wp-content/uploads/2024/01/Powered-by-Polly-white-v2.png"
+									alt="Polly"
+							/></span>
+						</div>
+					</span>
+				</div>
+				<div class="data">
+					<div class="loading" id="loadingDiv">Loading...</div>
+				</div>
+				<div class="polly-logo-border">
+					<img
+						src="https://www.housingwire.com/wp-content/uploads/2024/01/Polly_Dark.png"
+						alt="Polly"
+					/>
+				</div>
+			</div>
+
+			<div class="card" id="inventory">
+				<div class="header">
+					Inventory
+					<span class="tooltip-icon">
+						<div class="tooltip-icon-content">
+							<span class="tooltip-icon-text"
+								>Single family homes 7 day average</span
+							>
+							<span class="tooltip-icon-powered">Powered by Altos</span>
+						</div>
+					</span>
+				</div>
+				<div class="data">
+					<div class="loading" id="loadingDiv">Loading...</div>
+				</div>
+			</div>
+			<div
+				id="global-tooltip"
+				class="global-tooltip-icon-content"
+				style="position: fixed"
+			></div>
+
+			function fetchPollyMortgageRates() { console.log("fetching.....");
+			fetch("https://rt-search.onrender.com/polly-rates") .then((response) =&gt;
+			response.json()) .then((data) =&gt; { if (Array.isArray(data)) { // Find
+			the '30 YEAR CONFORMING' product const conforming_30 = data.find( (item)
+			=&gt; item.product === "30 YEAR CONFORMING" ); if (conforming_30) {
+			console.log("conforming_30", conforming_30); console.log("avg",
+			conforming_30.average_rate_today); updateCard( "mortgageRates",
+			`${conforming_30.average_rate_today}%`, formatChange(
+			parseFloat(conforming_30.last_close_day_delta), 3 ), false ); } else {
+			console.log("30 YEAR CONFORMING product not found"); } } else {
+			console.log("Invalid data format received"); } }) .catch((error) =&gt;
+			console.error("Error fetching Polly mortgage rates:", error) ); } // Fetch
+			data from the server
+			fetch("https://realtime-rates-server.onrender.com/api/data")
+			.then((response) =&gt; response.json()) .then((apiData) =&gt; { // Process
+			and display data for each card // Update Inventory Card if
+			(apiData.inventoryData) { const inventoryData =
+			apiData.inventoryData.data; const latestDate =
+			Object.keys(inventoryData).sort().reverse()[0]; const latestValue =
+			inventoryData[latestDate]; const inventoryChange =
+			apiData.inventoryData.change; updateCard( "inventory",
+			latestValue.toLocaleString(), formatChange(inventoryChange) ); } })
+			.catch((error) =&gt; console.error("Error fetching data:", error)); //
+			Function to update card data function updateCard(cardId, value, change,
+			isIncreaseGood = true) { const increase = isIncreaseGood ? "positive" :
+			"negative"; const decrease = isIncreaseGood ? "negative" : "positive";
+			const cardElement = document.getElementById(cardId);
+			cardElement.classList.add( change.startsWith("−") ? decrease : increase );
+			if (cardElement) { const dataElement = cardElement.querySelector(".data");
+			dataElement.innerHTML = `<span>${value}</span> <span>${change}</span>`; }
+			} function formatChange(changeValue, decimals = 0) { let formattedChange;
+			if (changeValue &gt;= 0) { formattedChange = "+" + (decimals === 0 ?
+			changeValue.toLocaleString() : changeValue.toFixed(decimals)); } else { //
+			Using the actual minus sign (−) instead of a dash (-) formattedChange =
+			"−" + (decimals === 0 ? Math.abs(changeValue).toLocaleString() :
+			Math.abs(changeValue).toFixed(decimals)); } console.log("Formatted
+			change", formattedChange); return formattedChange; }
+			document.addEventListener("DOMContentLoaded", function () {
+			fetchPollyMortgageRates(); const globalTooltip =
+			document.getElementById("global-tooltip"); let debounceTimer; document
+			.querySelectorAll(".tooltip-icon") .forEach(function (tooltipIcon) {
+			tooltipIcon.addEventListener("mouseenter", function () {
+			clearTimeout(debounceTimer); const tooltipContent = this.querySelector(
+			".tooltip-icon-content" ).innerHTML; globalTooltip.innerHTML =
+			tooltipContent; globalTooltip.style.display = "block";
+			positionGlobalTooltip(globalTooltip, this); setTimeout(() =&gt; {
+			globalTooltip.style.opacity = ".95"; }, 10); // Small delay for CSS
+			transition }); tooltipIcon.addEventListener("mouseleave", function () {
+			debounceTimer = setTimeout(() =&gt; { globalTooltip.style.display =
+			"none"; }, 50); // Delay to prevent flickering }); }); // Hide tooltip on
+			scroll window.addEventListener( "scroll", function () {
+			globalTooltip.style.display = "none"; }, { passive: true } ); function
+			positionGlobalTooltip(tooltip, triggerElement) { const triggerRect =
+			triggerElement.getBoundingClientRect(); const tooltipWidth =
+			tooltip.offsetWidth; const tooltipHeight = tooltip.offsetHeight; //
+			Calculate left position based on available screen space let left; if
+			(triggerRect.right + tooltipWidth &gt; window.innerWidth) { // Position
+			tooltip to the left of the icon if it goes off the screen left =
+			triggerRect.x - tooltipWidth - 30; } else { // Otherwise, position it to
+			the right left = triggerRect.x; } // Calculate top position to place
+			tooltip below or above the element const top = triggerRect.top; // Apply
+			the calculated position tooltip.style.left = `${left}px`;
+			tooltip.style.top = `${top}px`; } });
+		</div>
+	</div>
+</div>

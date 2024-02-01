@@ -1,0 +1,10 @@
+259c259
+< 				style="position: fixed; display: none"
+---
+> 				style="position: fixed"
+329,331c329
+< 						dataElement.innerHTML = `<span>${value}</span> <span class="change ${
+< 							change.startsWith("−") ? decrease : increase
+< 						}">${change}</span>`;
+---
+> 						dataElement.innerHTML = `<span>${value}</span> <span>${change}</span>`;

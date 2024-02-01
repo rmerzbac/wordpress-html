@@ -13,14 +13,12 @@
 		background-color: #e5e2de;
 		font-size: 16px;
 	}
-
 	.main-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		position: relative;
 	}
-
 	.line {
 		content: "";
 		position: absolute;
@@ -30,32 +28,27 @@
 		border-top: 1px solid #a6a6a6;
 		z-index: 0;
 	}
-
 	.market-glimpse,
 	.powered {
 		z-index: 1;
 		background-color: #e5e2de;
 		padding: 0 10px;
 	}
-
 	.powered {
 		color: #a6a6a6;
 		font-size: 12px;
 	}
-
 	.market-glimpse {
 		font-weight: bold;
 		margin-left: 25px;
 		margin-right: 5px;
 	}
-
 	.cards-container {
 		display: flex;
 		flex-wrap: wrap; /* Allows cards to wrap onto the next line on smaller screens */
 		justify-content: space-between;
 		margin-top: 20px;
 	}
-
 	.card {
 		position: relative;
 		border: 1px solid black;
@@ -67,38 +60,30 @@
 		margin-bottom: 12px;
 		width: calc(50% - 10px); /* 50% width minus margin */
 	}
-
 	.header {
 		color: #828282;
 		text-transform: uppercase;
 	}
-
 	.data {
 		font-weight: 600;
 	}
-
 	span.positive,
 	span.negative {
 		padding: 0px;
 		padding-left: 12px;
 	}
-
 	.change.positive {
 		color: #287713; /* Green */
 	}
-
 	.change.negative {
 		color: #dd3441; /* Red */
 	}
-
 	.card.positive {
 		border-color: #aab99f; /* Light green */
 	}
-
 	.card.negative {
 		border-color: #d3a7a5; /* Light red */
 	}
-
 	.tooltip-icon::before {
 		content: "i";
 		display: inline-block;
@@ -111,18 +96,15 @@
 		line-height: 20px;
 		font-style: normal;
 	}
-
 	.tooltip-icon {
 		text-transform: lowercase;
 		position: relative;
 		display: inline-block;
 		cursor: pointer;
 	}
-
 	.tooltip-icon-content {
 		display: none;
 	}
-
 	.global-tooltip-icon-content {
 		margin: 25px;
 		width: 230px;
@@ -136,26 +118,21 @@
 		opacity: 0;
 		transition: opacity 0.3s;
 	}
-
 	.tooltip-icon-powered {
 		display: block;
 		text-align: right;
 		font-style: italic;
 		margin-top: 12px;
 	}
-
 	.tooltip-icon-powered img {
 		height: 24px;
 	}
-
 	.tooltip-icon-text {
 		text-align: left;
 	}
-
 	#global-tooltip {
 		z-index: 1000;
 	}
-
 	.polly-logo-border {
 		position: absolute;
 		bottom: -9px;
@@ -164,13 +141,11 @@
 		padding: 0 10px;
 		z-index: 2;
 	}
-
 	.polly-logo-border img {
 		height: auto; /* or your desired value */
 		width: 80px; /* or your desired value */
 		object-fit: contain; /* This makes sure that the aspect ratio is maintained */
 	}
-
 	@media screen and (max-width: 1000px) {
 		.market-glimpse-container {
 			font-size: 12px;
@@ -200,14 +175,12 @@
 		}
 	}
 </style>
-
 <div id="market-glimpse">
 	<div class="market-glimpse-container">
 		<div class="main-header">
 			<span class="market-glimpse">Market Glimpse</span>
 			<div class="line"></div>
 		</div>
-
 		<div class="cards-container">
 			<div class="card" id="mortgageRates">
 				<div class="header">
@@ -236,7 +209,6 @@
 					/>
 				</div>
 			</div>
-
 			<div class="card" id="inventory">
 				<div class="header">
 					Inventory
@@ -256,9 +228,8 @@
 			<div
 				id="global-tooltip"
 				class="global-tooltip-icon-content"
-				style="position: fixed; display: none"
+				style="position: fixed"
 			></div>
-
 			<script>
 				function fetchPollyMortgageRates() {
 					console.log("fetching.....");
@@ -270,7 +241,6 @@
 								const conforming_30 = data.find(
 									(item) => item.product === "30 YEAR CONFORMING"
 								);
-
 								if (conforming_30) {
 									console.log("conforming_30", conforming_30);
 									console.log("avg", conforming_30.average_rate_today);
@@ -294,13 +264,11 @@
 							console.error("Error fetching Polly mortgage rates:", error)
 						);
 				}
-
 				// Fetch data from the server
 				fetch("https://realtime-rates-server.onrender.com/api/data")
 					.then((response) => response.json())
 					.then((apiData) => {
 						// Process and display data for each card
-
 						// Update Inventory Card
 						if (apiData.inventoryData) {
 							const inventoryData = apiData.inventoryData.data;
@@ -315,7 +283,6 @@
 						}
 					})
 					.catch((error) => console.error("Error fetching data:", error));
-
 				// Function to update card data
 				function updateCard(cardId, value, change, isIncreaseGood = true) {
 					const increase = isIncreaseGood ? "positive" : "negative";
@@ -326,12 +293,9 @@
 					);
 					if (cardElement) {
 						const dataElement = cardElement.querySelector(".data");
-						dataElement.innerHTML = `<span>${value}</span> <span class="change ${
-							change.startsWith("−") ? decrease : increase
-						}">${change}</span>`;
+						dataElement.innerHTML = `<span>${value}</span> <span>${change}</span>`;
 					}
 				}
-
 				function formatChange(changeValue, decimals = 0) {
 					let formattedChange;
 					if (changeValue >= 0) {
@@ -351,12 +315,10 @@
 					console.log("Formatted change", formattedChange);
 					return formattedChange;
 				}
-
 				document.addEventListener("DOMContentLoaded", function () {
 					fetchPollyMortgageRates();
 					const globalTooltip = document.getElementById("global-tooltip");
 					let debounceTimer;
-
 					document
 						.querySelectorAll(".tooltip-icon")
 						.forEach(function (tooltipIcon) {
@@ -372,14 +334,12 @@
 									globalTooltip.style.opacity = ".95";
 								}, 10); // Small delay for CSS transition
 							});
-
 							tooltipIcon.addEventListener("mouseleave", function () {
 								debounceTimer = setTimeout(() => {
 									globalTooltip.style.display = "none";
 								}, 50); // Delay to prevent flickering
 							});
 						});
-
 					// Hide tooltip on scroll
 					window.addEventListener(
 						"scroll",
@@ -388,12 +348,10 @@
 						},
 						{ passive: true }
 					);
-
 					function positionGlobalTooltip(tooltip, triggerElement) {
 						const triggerRect = triggerElement.getBoundingClientRect();
 						const tooltipWidth = tooltip.offsetWidth;
 						const tooltipHeight = tooltip.offsetHeight;
-
 						// Calculate left position based on available screen space
 						let left;
 						if (triggerRect.right + tooltipWidth > window.innerWidth) {
@@ -403,10 +361,8 @@
 							// Otherwise, position it to the right
 							left = triggerRect.x;
 						}
-
 						// Calculate top position to place tooltip below or above the element
 						const top = triggerRect.top;
-
 						// Apply the calculated position
 						tooltip.style.left = `${left}px`;
 						tooltip.style.top = `${top}px`;
