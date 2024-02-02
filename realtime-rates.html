@@ -66,6 +66,14 @@
 		color: #828282;
 		text-transform: uppercase;
 	}
+	a.header-link {
+		color: #828282;
+		text-decoration: none;
+	}
+	a.header-link:hover {
+		color: #616060;
+		text-decoration: underline;
+	}
 	.data {
 		font-weight: 600;
 	}
@@ -201,7 +209,13 @@
 		<div class="cards-container">
 			<div class="card" id="mortgageRates">
 				<div class="header">
-					<span>30-Yr Fixed Mortgage Rate</span>
+					<span
+						><a
+							class="header-link"
+							href="https://www.housingwire.com/mortgage-rates/"
+							>30-Yr Fixed Mortgage Rate</a
+						></span
+					>
 					<span class="tooltip-icon">
 						<div class="tooltip-icon-content">
 							<span class="tooltip-icon-text"
@@ -228,7 +242,12 @@
 			</div>
 			<div class="card" id="inventory">
 				<div class="header">
-					Inventory
+					<a
+						class="header-link"
+						href="https://altosresearch.com/solutions_overview"
+						target="_blank"
+						>Inventory</a
+					>
 					<span class="tooltip-icon">
 						<div class="tooltip-icon-content">
 							<span class="tooltip-icon-text"
