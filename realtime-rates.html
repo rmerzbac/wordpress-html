@@ -1,16 +1,18 @@
 <style>
 	#market-glimpse {
 		width: 100%;
-		padding: 20px;
+		padding: 10px 20px 10px;
 		display: flex;
 		justify-content: center;
+		background-color: #f8f7f4;
+		margin: 0 0 15px 0;
 	}
 	.market-glimpse-container {
 		width: 100%;
-		max-width: 1500px;
+		max-width: 1435px;
 		font-family: Arial, sans-serif;
-		margin: 20px 0;
-		background-color: #e5e2de;
+		margin: 0;
+		background-color: transparent;
 		font-size: 16px;
 	}
 	.main-header {
@@ -31,7 +33,7 @@
 	.market-glimpse,
 	.powered {
 		z-index: 1;
-		background-color: #e5e2de;
+		background-color: #f8f7f4;
 		padding: 0 10px;
 	}
 	.powered {
@@ -47,7 +49,7 @@
 		display: flex;
 		flex-wrap: wrap; /* Allows cards to wrap onto the next line on smaller screens */
 		justify-content: space-between;
-		margin-top: 20px;
+		margin-top: 15px;
 	}
 	.card {
 		position: relative;
@@ -138,7 +140,7 @@
 		position: absolute;
 		bottom: -9px;
 		right: 10px;
-		background-color: #e5e2de;
+		background-color: #f8f7f4;
 		padding: 0 10px;
 		z-index: 2;
 	}
@@ -168,8 +170,10 @@
 		}
 	}
 	@media screen and (max-width: 450px) {
-		.market-glimpse-container {
+		#market-glimpse {
 			font-size: 12px;
+			margin: 0 0 15px;
+			padding-bottom: 0;
 		}
 		.global-tooltip-icon-content {
 			width: 180px;
@@ -182,6 +186,9 @@
 		}
 		.tooltip-icon-powered {
 			font-size: 11px;
+		}
+		.market-glimpse-container {
+			margin: 0;
 		}
 	}
 </style>
