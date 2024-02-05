@@ -1,9 +1,9 @@
 <style>
 	.market-glimpse-container {
 		font-family: Arial, sans-serif;
-		margin: 20px 0;
+		margin: 0 0 20px;
 		background-color: #f8f7f4;
-		font-size: 12.5px;
+		font-size: 14px;
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -11,7 +11,7 @@
 
 	.market-glimpse-inner-container {
 		width: 90%;
-		max-width: 1200px;
+		max-width: 1500px;
 	}
 
 	.main-header {
@@ -24,7 +24,7 @@
 
 	.main-header img {
 		height: 36px;
-		margin-right: 24px;
+		margin-right: 0;
 	}
 
 	.line {
@@ -123,6 +123,13 @@
 		display: flex;
 		justify-content: space-between;
 	}
+	p.updated-hourly {
+		font-size: 13px;
+		color: #999 !important;
+		text-align: right;
+		font-style: italic;
+		margin: 0;
+	}
 
 	/* Media Query for screen widths less than 1340px */
 	@media screen and (max-width: 1340px) {
@@ -167,10 +174,11 @@
 <div class="market-glimpse-container">
 	<div class="market-glimpse-inner-container">
 		<div class="main-header">
-			<img
-				src="https://www.housingwire.com/wp-content/uploads/2024/01/Powered-by-Polly-dark.png"
-				alt="Polly"
-			/>
+			<a href="https://polly.io/" target="_blank" rel="noopener"
+				><img
+					src="https://www.housingwire.com/wp-content/uploads/2024/01/Powered-by-Polly-dark-v2.png"
+					alt="Polly"
+			/></a>
 		</div>
 
 		<div class="cards-container" id="desktop-rates-container">
@@ -202,6 +210,9 @@
 				</div>
 			</div>
 		</div>
+		<p class="updated-hourly">
+			<a style="color: #999" href="#faq0">Rates updated hourly</a>
+		</p>
 
 		<div class="cards-container" id="mobile-rates-container">
 			<div class="mobile-card">
