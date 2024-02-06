@@ -78,7 +78,8 @@
 		font-weight: 600;
 	}
 	span.positive,
-	span.negative {
+	span.negative,
+	span.zero {
 		padding: 0px;
 		padding-left: 12px;
 	}
@@ -93,6 +94,9 @@
 	}
 	.card.negative {
 		border-color: #d3a7a5; /* Light red */
+	}
+	.card.zero {
+		border-color: #828282;
 	}
 	.tooltip-icon::before {
 		content: "i";
@@ -284,11 +288,8 @@
 									console.log("avg", conforming_30.average_rate_today);
 									updateCard(
 										"mortgageRates",
-										`${conforming_30.average_rate_today}%`,
-										formatChange(
-											parseFloat(conforming_30.last_close_day_delta),
-											3
-										),
+										formatRate(conforming_30.average_rate_today),
+										formatChange(conforming_30.last_close_day_delta, 2),
 										false
 									);
 								} else {
@@ -321,40 +322,86 @@
 						}
 					})
 					.catch((error) => console.error("Error fetching data:", error));
+
 				// Function to update card data
 				function updateCard(cardId, value, change, isIncreaseGood = true) {
 					const increase = isIncreaseGood ? "positive" : "negative";
 					const decrease = isIncreaseGood ? "negative" : "positive";
+
+					// Update standard card
 					const cardElement = document.getElementById(cardId);
-					cardElement.classList.add(
-						change.startsWith("−") ? decrease : increase
-					);
 					if (cardElement) {
-						const dataElement = cardElement.querySelector(".data");
-						dataElement.innerHTML = `<span>${value}</span> <span class="change ${
-							change.startsWith("−") ? decrease : increase
-						}">${change}</span>`;
+						updateCardContent(cardElement, value, change, increase, decrease);
 					}
+
+					// Update mobile card
+					const mobileCardElements = document.querySelectorAll(
+						`.mobile-data[id="${cardId}"]`
+					);
+					mobileCardElements.forEach((mobileCardElement) => {
+						if (mobileCardElement) {
+							updateCardContent(
+								mobileCardElement,
+								value,
+								change,
+								increase,
+								decrease
+							);
+						}
+					});
 				}
-				function formatChange(changeValue, decimals = 0) {
+
+				function updateCardContent(
+					cardElement,
+					value,
+					change,
+					increase,
+					decrease
+				) {
+					let changeClass;
+					if (change.startsWith("−")) changeClass = decrease;
+					else if (change.startsWith("+")) changeClass = increase;
+					else changeClass = "zero";
+					cardElement.classList.add(changeClass);
+					const dataElement = cardElement.querySelector(".data");
+					dataElement.innerHTML = `<span>${value}</span> <span class="change ${changeClass}">${change}</span>`;
+				}
+
+				function roundToDecimals(num, decimals) {
+					const factor = Math.pow(10, decimals);
+					return Math.round(num * factor) / factor;
+				}
+
+				function formatRate(rateValue, decimals = 2) {
+					return `${parseFloat(rateValue).toFixed(decimals)}%`;
+				}
+
+				function formatChange(changeValueUnparsed, decimals = 0) {
+					const changeValue = roundToDecimals(
+						parseFloat(changeValueUnparsed),
+						decimals
+					);
 					let formattedChange;
-					if (changeValue >= 0) {
+					if (changeValue > 0) {
 						formattedChange =
 							"+" +
 							(decimals === 0
 								? changeValue.toLocaleString()
 								: changeValue.toFixed(decimals));
-					} else {
+					} else if (changeValue < 0) {
 						// Using the actual minus sign (−) instead of a dash (-)
 						formattedChange =
 							"−" +
 							(decimals === 0
 								? Math.abs(changeValue).toLocaleString()
 								: Math.abs(changeValue).toFixed(decimals));
+					} else {
+						formattedChange = changeValue.toFixed(decimals);
 					}
 					console.log("Formatted change", formattedChange);
 					return formattedChange;
 				}
+
 				document.addEventListener("DOMContentLoaded", function () {
 					fetchPollyMortgageRates();
 					const globalTooltip = document.getElementById("global-tooltip");
