@@ -175,7 +175,7 @@ h2 a.entry-title,
 	transition: none !important;
 }
 .button.view {
-	background-color: #e8e2de;
+	background-color: #e8e2de !important;
 }
 @media screen and (max-width: 600px) {
 	.cx-flex-module[data-cx_zgn1] .cx-item {
