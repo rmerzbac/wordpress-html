@@ -11,6 +11,19 @@
 	font-family: Poppins, sans-serif;
 	color: var(--hw-roof-black);
 }
+b,
+strong,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: bold;
+}
+h1 {
+	font-size: 2rem;
+}
 body {
 	background-color: var(--hw-gray);
 }
