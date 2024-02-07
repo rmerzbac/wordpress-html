@@ -1,6 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+	--hw-roof-black: #1a1f22;
+	--hw-gray: #e5e2de;
+	--hw-eggshell: #f8f7f4;
+	--hw-red: #7d1725;
+	--hw-link-hover: #767672;
+}
 * {
 	font-family: Poppins, sans-serif;
+	color: var(--hw-roof-black);
 }
-button {
-	color: red;
+body {
+	background-color: var(--hw-gray);
+}
+p {
+	font-size: 0.875rem;
+}
+a:hover {
+	color: var(--hw-link-hover);
+}
+button.cta,
+.button.cta {
+	padding: 12px 18px;
+	border-radius: 0;
+	border: 1px solid var(--hw-red);
+	background-color: var(--hw-red);
+	color: var(--hw-eggshell);
+	font-weight: bold;
+}
+button.cta:hover,
+.button.cta:hover {
+	background-color: var(--hw-eggshell);
+	color: var(--hw-red);
 }
