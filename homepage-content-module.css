@@ -174,8 +174,12 @@ h2 a.entry-title,
 	transform: scale(1) !important;
 	transition: none !important;
 }
+/* Reid */
 .button.view {
-	background-color: #e8e2de !important;
+	background-color: #e5e2de !important;
+}
+.housingwire .container__view--category:after {
+	background-color: transparent !important;
 }
 @media screen and (max-width: 600px) {
 	.cx-flex-module[data-cx_zgn1] .cx-item {
