@@ -178,8 +178,11 @@ h2 a.entry-title,
 .button.view {
 	background-color: #e5e2de !important;
 }
-.housingwire .container__view--category:after {
+/*.housingwire .container__view--category:after {
 	background-color: transparent !important;
+}*/
+.housingwire .tp-cxense-placeholder-inline .container__view--category {
+	margin-top: -1.42rem !important;
 }
 @media screen and (max-width: 600px) {
 	.cx-flex-module[data-cx_zgn1] .cx-item {
