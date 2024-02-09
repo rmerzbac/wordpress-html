@@ -1,0 +1,391 @@
+<script
+	src="https://kit.fontawesome.com/de8c0f8b92.js"
+	crossorigin="anonymous"
+></script>
+<!-- HTML Structure -->
+<div id="searchWidget">
+	<div class="filter-container">
+		Filter by:
+		<input
+			type="checkbox"
+			id="filterAgents"
+			class="filter-checkbox"
+			checked
+			onchange="fetchResults()"
+		/>
+		<label for="filterAgents">Agents</label>
+		<input
+			type="checkbox"
+			id="filterTeams"
+			class="filter-checkbox"
+			checked
+			onchange="fetchResults()"
+		/>
+		<label for="filterTeams">Teams</label>
+		<input
+			type="checkbox"
+			id="filterBrokerages"
+			class="filter-checkbox"
+			checked
+			onchange="fetchResults()"
+		/>
+		<label for="filterBrokerages">Brokerages</label>
+		<input
+			type="text"
+			id="zipCodeInput"
+			placeholder="Zip Code"
+			onchange="fetchResults()"
+		/>
+	</div>
+
+	<div class="search-container">
+		<input
+			type="text"
+			id="searchInput"
+			placeholder="Search by agent, team, city or company"
+			oninput="fetchResults()"
+			autocomplete="off"
+		/>
+		<i
+			id="filterIcon"
+			class="fa-solid fa-toggle-on"
+			onclick="toggleFilterVisibility()"
+		></i>
+	</div>
+	<div id="resultsArea" style="height: 300px; overflow-y: scroll"></div>
+</div>
+
+<style>
+	.result-header {
+		display: flex;
+		padding: 10px;
+		background-color: #ffffff;
+		font-weight: bold;
+		position: sticky;
+		top: 0;
+		z-index: 1000;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	}
+
+	.header-name,
+	.header-company,
+	.header-location {
+		display: inline-block;
+		margin-right: 10px;
+	}
+
+	.header-name {
+		width: 660px; /* Width of the name column */
+	}
+
+	.header-location {
+		/* width: 225px; */ /* Width of the location column */
+	}
+
+	.name {
+		display: flex;
+		align-items: center; /* Center-align items vertically */
+		margin-right: 10px;
+		flex: 0 0 660px; /* Adjusted width considering icon and margin */
+	}
+
+	/* Style for the text next to the icon */
+	.name-text {
+		flex-grow: 1; /* Allow text to take up available space */
+		text-align: left; /* Align text to the left */
+		margin-left: 10px; /* Add space between the icon and the text */
+	}
+
+	.location-name {
+		/* width: 225px; */ /* Adjusted width for location */
+		display: inline-block;
+	}
+
+	div#searchWidget {
+		max-width: 950px;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.search-container {
+		position: relative;
+		display: flex;
+		align-items: center;
+		padding: 10px;
+		border-radius: 3px;
+		background-color: #fff;
+		border: 1px solid #ccc;
+	}
+
+	#searchInput {
+		font-size: 18px;
+		border-radius: 0;
+		padding: 8px 5px;
+		width: 100%;
+		border: 0;
+		outline: none;
+	}
+
+	#filterIcon {
+		position: absolute;
+		right: 10px;
+		cursor: pointer;
+		color: #999999;
+	}
+
+	#zipCodeInput {
+		width: 100px;
+		margin-left: 10px;
+	}
+
+	.result-row {
+		display: flex; /* Use Flexbox */
+		align-items: center; /* Align items vertically in the center */
+		padding: 10px;
+		border-bottom: 1px solid #e0e0e0; /* Add a light border between results for clarity */
+		text-decoration: none; /* Remove underline from links */
+		color: inherit; /* Inherit text color */
+		background-color: white; /* Default background */
+	}
+
+	.result-row:hover {
+		background-color: #a6cdf7 !important; /* Change background on hover */
+	}
+
+	.result-row:nth-child(odd) {
+		background-color: white;
+	}
+
+	.result-row:nth-child(even) {
+		background-color: #f2f2f2; /* Light gray background */
+	}
+
+	i {
+		color: #999999;
+		width: 32px; /* Fixed width for the icon */
+		text-align: center; /* Center the icon */
+		flex-shrink: 0; /* Prevent icon from shrinking */
+	}
+
+	.name-text {
+		color: #999999;
+	}
+	.name-text b {
+		color: black;
+	}
+
+	a:hover {
+		color: inherit;
+	}
+
+	.bar {
+		margin-left: 3px;
+		margin-right: 3px;
+	}
+
+	#filterIcon {
+		cursor: pointer;
+		margin-left: 10px;
+		vertical-align: middle;
+	}
+
+	.filter-container {
+		display: none; /* Use flexbox for horizontal layout */
+		align-items: center; /* Vertically align items */
+		margin-bottom: 10px; /* Add space below the checkbox container */
+		font-size: 12px;
+		justify-content: right;
+	}
+
+	/* Style for checkboxes */
+	.filter-checkbox {
+		width: 12px;
+		pointer-events: auto !important;
+		opacity: 1 !important;
+		position: relative !important;
+		vertical-align: middle; /* Vertically align with the text */
+		margin: 0 5px; /* Space to the right of each checkbox */
+	}
+
+	/* Style for labels (text next to checkboxes) */
+	.filter-checkbox + label {
+		margin: 0px;
+		margin-right: 7px; /* Space to the right of each label */
+		vertical-align: middle; /* Vertically align with checkboxes */
+		cursor: pointer; /* Cursor to indicate clickable area */
+		display: inline-block; /* Ensure labels are inline */
+	}
+
+	/* Media query for tablets and mobile */
+	@media (max-width: 860px) {
+		.result-header {
+			display: none;
+		}
+
+		.result-row {
+			flex-wrap: wrap; /* Allow items to wrap */
+			flex-direction: column; /* Stack items vertically */
+			align-items: normal;
+		}
+
+		.name {
+			width: 100%; /* Full width for name section */
+			flex: 0;
+		}
+
+		.name-text {
+			display: block; /* Display name text in block format */
+			color: black;
+		}
+
+		.name-text b {
+			display: block; /* Ensure name is on a new line */
+		}
+
+		.location-name {
+			width: 100%; /* Full width for location */
+		}
+
+		.location-text {
+			margin-left: 42px;
+			color: #999999;
+		}
+
+		.bar {
+			display: none;
+		}
+	}
+
+	@media (max-width: 450px) {
+		#searchInput {
+			font-size: 14px;
+		}
+		#zipCodeInput {
+			margin-left: 0px;
+			width: 70px;
+			font-size: 11px;
+		}
+	}
+</style>
+
+<!-- JavaScript -->
+<script>
+	let timeout = null;
+	let resultsFound = false;
+
+	function toggleFilterVisibility() {
+		const filterContainer = document.querySelector(".filter-container");
+		filterContainer.style.display =
+			filterContainer.style.display === "flex" ? "none" : "flex";
+	}
+
+	document
+		.getElementById("zipCodeInput")
+		.addEventListener("input", function () {
+			const zipCode = this.value;
+			if (zipCode.length === 5 && /^\d{5}$/.test(zipCode)) {
+				fetchResults();
+			}
+		});
+
+	function fetchResults() {
+		const searchTerm = document.getElementById("searchInput").value;
+		const zipCode = document.getElementById("zipCodeInput").value;
+		const filterAgents = document.getElementById("filterAgents").checked;
+		const filterTeams = document.getElementById("filterTeams").checked;
+		const filterBrokerages =
+			document.getElementById("filterBrokerages").checked;
+
+		/*if (searchTerm.length < 2) {
+        document.getElementById('resultsArea').innerHTML = 'Type more to search...';
+        return;
+    }*/
+
+		// Clear the existing timeout if it exists
+		if (timeout) clearTimeout(timeout);
+
+		// Set a new timeout
+		timeout = setTimeout(() => {
+			const endpoint = `https://rt-search.onrender.com/search?searchTerm=${encodeURIComponent(
+				searchTerm
+			)}&zipCode=${zipCode}`;
+			// console.log(endpoint);
+			const resultsArea = document.getElementById("resultsArea");
+
+			if (!resultsFound) resultsArea.innerHTML = "Loading...";
+
+			fetch(endpoint)
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error("Network response was not ok");
+					}
+					return response.json();
+				})
+				.then((data) => {
+					let output = `
+                    <div class="result-header">
+                        <span class="header-name">Name</span>
+                        <span class="header-location">Location</span>
+                    </div>
+                    <div class="results">`;
+
+					resultsFound = false;
+
+					// Filter data based on the checkboxes
+					const filteredData = data.filter((record) => {
+						if (record.type === "agent" && filterAgents) return true;
+						if (record.type === "team" && filterTeams) return true;
+						if (record.type === "brokerage" && filterBrokerages) return true;
+						return false;
+					});
+
+					// Process the filtered data
+					if (
+						filteredData &&
+						Array.isArray(filteredData) &&
+						filteredData.length > 0
+					) {
+						resultsFound = true;
+						filteredData.forEach((record) => {
+							const name = record.name;
+							const company = record.company;
+							const location = record.location;
+							const profileUrl = record.profile;
+							const type = record.type;
+							const icon =
+								type === "agent"
+									? "fa-user"
+									: type === "team"
+									? "fa-people-group"
+									: "fa-building";
+
+							output += `
+                        <a href="${profileUrl}" target="_blank" class="result-row">
+                            <span class="name">
+                                <i class="fa-solid ${icon}"></i>
+                                <span class="name-text"><b>${name}</b>${
+								type !== "brokerage"
+									? '<span class="bar">|</span>' + company
+									: ""
+							}</span></span>
+                            </span>
+                            <span class="location-name"><span class="location-text">${location}</span></span>
+                        </a>`;
+						});
+					}
+					output += "</div>";
+
+					if (resultsFound) {
+						resultsArea.innerHTML = output;
+					} else {
+						resultsArea.innerHTML = "<div>No results found.</div>";
+					}
+				})
+				.catch((error) => {
+					console.error("Error fetching data:", error);
+					resultsArea.innerHTML =
+						"An error occurred while fetching results. Please try again later.";
+				});
+		}, 200);
+	}
+</script>
