@@ -255,7 +255,7 @@
 
 	<script>
 		function fetchPollyMortgageRates() {
-			console.log("fetching.....");
+			// console.log("fetching.....");
 			fetch("https://hw-api.onrender.com/rates/polly-rates")
 				.then((response) => response.json())
 				.then((data) => {
@@ -377,7 +377,7 @@
 			} else {
 				formattedChange = changeValue.toFixed(decimals);
 			}
-			console.log("Formatted change", formattedChange);
+			// console.log("Formatted change", formattedChange);
 			return formattedChange;
 		}
 
