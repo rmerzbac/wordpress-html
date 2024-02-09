@@ -256,7 +256,7 @@
 	<script>
 		function fetchPollyMortgageRates() {
 			console.log("fetching.....");
-			fetch("https://rt-search.onrender.com/polly-rates")
+			fetch("https://hw-api.onrender.com/rates/polly-rates")
 				.then((response) => response.json())
 				.then((data) => {
 					if (Array.isArray(data)) {
