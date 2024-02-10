@@ -255,7 +255,7 @@
 					<span class="tooltip-icon">
 						<div class="tooltip-icon-content">
 							<span class="tooltip-icon-text"
-								>Single family homes on the market</span
+								>Single family homes on the market. Updated weekly.</span
 							>
 							<span class="tooltip-icon-powered"
 								>Powered by Altos Research</span
@@ -274,8 +274,8 @@
 			></div>
 			<script>
 				function fetchPollyMortgageRates() {
-					console.log("fetching.....");
-					fetch("https://rt-search.onrender.com/polly-rates")
+					// console.log("fetching.....");
+					fetch("https://hw-api.onrender.com/rates/polly-rates")
 						.then((response) => response.json())
 						.then((data) => {
 							if (Array.isArray(data)) {
@@ -284,8 +284,6 @@
 									(item) => item.product === "30 YEAR CONFORMING"
 								);
 								if (conforming_30) {
-									console.log("conforming_30", conforming_30);
-									console.log("avg", conforming_30.average_rate_today);
 									updateCard(
 										"mortgageRates",
 										formatRate(conforming_30.average_rate_today),
@@ -303,25 +301,29 @@
 							console.error("Error fetching Polly mortgage rates:", error)
 						);
 				}
-				// Fetch data from the server
-				fetch("https://realtime-rates-server.onrender.com/api/data")
-					.then((response) => response.json())
-					.then((apiData) => {
-						// Process and display data for each card
-						// Update Inventory Card
-						if (apiData.inventoryData) {
-							const inventoryData = apiData.inventoryData.data;
-							const latestDate = Object.keys(inventoryData).sort().reverse()[0];
-							const latestValue = inventoryData[latestDate];
-							const inventoryChange = apiData.inventoryData.change;
-							updateCard(
-								"inventory",
-								latestValue.toLocaleString(),
-								formatChange(inventoryChange)
-							);
-						}
-					})
-					.catch((error) => console.error("Error fetching data:", error));
+				function fetchAltosInventoryRates() {
+					// Fetch data from the server
+					fetch("https://hw-api.onrender.com/rates/altos")
+						.then((response) => response.json())
+						.then((apiData) => {
+							// Process and display data for each card
+							// Update Inventory Card
+							if (apiData.inventoryData) {
+								const inventoryData = apiData.inventoryData.data;
+								const latestDate = Object.keys(inventoryData)
+									.sort()
+									.reverse()[0];
+								const latestValue = inventoryData[latestDate];
+								const inventoryChange = apiData.inventoryData.change;
+								updateCard(
+									"inventory",
+									latestValue.toLocaleString(),
+									formatChange(inventoryChange)
+								);
+							}
+						})
+						.catch((error) => console.error("Error fetching data:", error));
+				}
 
 				// Function to update card data
 				function updateCard(cardId, value, change, isIncreaseGood = true) {
@@ -398,12 +400,13 @@
 					} else {
 						formattedChange = changeValue.toFixed(decimals);
 					}
-					console.log("Formatted change", formattedChange);
+					// console.log("Formatted change", formattedChange);
 					return formattedChange;
 				}
 
 				document.addEventListener("DOMContentLoaded", function () {
 					fetchPollyMortgageRates();
+					fetchAltosInventoryRates();
 					const globalTooltip = document.getElementById("global-tooltip");
 					let debounceTimer;
 					document
