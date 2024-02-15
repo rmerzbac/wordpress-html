@@ -25,10 +25,6 @@
 	text-decoration: none;
 }
 
-#cx-first-item {
-	margin: 0 0 1.5rem;
-}
-
 .cx-flex-module[data-cx_zgn1] .cx-item.text-only {
 	box-sizing: border-box;
 	display: block;
@@ -127,6 +123,7 @@
 	min-height: 375px;
 }
 #cx-first-item {
+	width: 100%;
 	margin: 0 0 1.5rem;
 	position: relative;
 	overflow: hidden;
