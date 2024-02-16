@@ -1,0 +1,133 @@
+<style>
+	.blur {
+		filter: blur(5px);
+		-webkit-filter: blur(5px);
+		color: transparent;
+		text-shadow: 0 0 8px #ccc;
+		color: #777 !important;
+	}
+	.icon-container {
+		width: 100%; /* Container width */
+		/* Other styling as needed */
+	}
+
+	.icon-container i {
+		color: #999999;
+		display: block; /* Block-level for better control */
+		width: 100%; /* Full width of container */
+		font-size: 10em; /* Adjust this value as needed */
+		text-align: center; /* Center the icon */
+		/* Add any additional styling for the icon */
+	}
+</style>
+<div class="wp-block-hw-agent-team-profile-details-block alignfull">
+	<div class="agent-team-inner">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x align-center">
+				<div class="cell small-12 large-10">
+					<div class="grid-x grid-padding-x">
+						<div class="cell small-12 large-3">
+							<div id="icon" class="icon-container"></div>
+						</div>
+
+						<div class="cell small-12 large-9">
+							<div class="grid-x align-justify agent-team-content-wrapper">
+								<div class="cell small-12 large-6">
+									<h1 class="margin-0" id="name">Name</h1>
+									<p class="margin-0" id="verification">-</p>
+								</div>
+								<div class="cell small-12">
+									<div class="agent-team-profile-details">
+										<div class="grid-x grid-padding-x grid-padding-y">
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">Company</p>
+												<p id="company" class="detail">-</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">Network</p>
+												<p class="detail blur">Network</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">Location</p>
+												<p class="detail" id="location">Location</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">Country</p>
+												<p class="detail blur">Country</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">Zip Code</p>
+												<p class="detail blur">Zip Code</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">Number of Agents</p>
+												<p class="detail blur">Number of Agents</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">Team Size</p>
+												<p class="detail blur">Team Size</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">
+													Sales Volume Per Agent
+												</p>
+												<p class="detail blur">Sales Volume Per Agent</p>
+											</div>
+											<div class="cell small-12 medium-6 large-4">
+												<p class="detail-label margin-0">
+													Transactions Per Agent
+												</p>
+												<p class="detail blur">Transactions Per Agent</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="icon"></div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Parse query parameters
+		const queryParams = new URLSearchParams(window.location.search);
+
+		// Get parameters
+		const name = queryParams.get("fullname") || "Not specified";
+		const company = queryParams.get("company") || "Not specified";
+		const location = queryParams.get("location") || "Not specified";
+		const type = queryParams.get("type") || "";
+
+		console.log(name);
+		console.log(company);
+		console.log(location);
+
+		let verification = "";
+		let iconHtml = "";
+
+		if (type === "agent") {
+			verification = "Real Estate Agent";
+			iconHtml = "<i class='fa-solid fa-user'></i>"; // Icon for agent
+		} else if (type === "team") {
+			verification = "Real Estate Team";
+			iconHtml = "<i class='fa-solid fa-users'></i>"; // Icon for team
+		} else if (type === "brokerage") {
+			verification = "Real Estate Brokerage";
+			iconHtml = "<i class='fa-solid fa-building'></i>"; // Icon for brokerage
+		}
+
+		// Set text content of elements
+		document.getElementById("name").textContent = name;
+		document.getElementById("company").textContent = company;
+		document.getElementById("location").textContent = location;
+		document.getElementById("verification").textContent = verification;
+
+		// Set innerHTML for the icon
+		document.getElementById("icon").innerHTML = iconHtml;
+	});
+</script>
