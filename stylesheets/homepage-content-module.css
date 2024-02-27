@@ -112,6 +112,7 @@
 	min-height: 375px;
 }
 .container__txt.flex-container.flex-dir-column.align-justify {
+	width: 100%;
 	position: absolute;
 	bottom: -60px;
 	background-color: rgba(26, 31, 34, 0.8);
