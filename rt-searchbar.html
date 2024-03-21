@@ -42,7 +42,7 @@
 		<input
 			type="text"
 			id="searchInput"
-			placeholder="Search by agent, team, city or company"
+			placeholder="Search by company, agent, or teams"
 			oninput="fetchResults()"
 			autocomplete="off"
 		/>
@@ -51,6 +51,10 @@
 			class="fa-solid fa-toggle-on"
 			onclick="toggleFilterVisibility()"
 		></i>
+	</div>
+	<div id="links" style="display: block">
+		<a href="#map">Jump to state rankings</a><br />
+		<a href="#cityLinks">Jump to city rankings</a>
 	</div>
 	<div id="resultsArea" style="height: 300px; overflow-y: none"></div>
 </div>
@@ -289,6 +293,7 @@
 		});
 
 	function fetchResults() {
+		const resultsArea = document.getElementById("resultsArea");
 		const searchTerm = document.getElementById("searchInput").value;
 		const zipCode = document.getElementById("zipCodeInput").value;
 		const filterAgents = document.getElementById("filterAgents").checked;
@@ -296,10 +301,14 @@
 		const filterBrokerages =
 			document.getElementById("filterBrokerages").checked;
 
-		/*if (searchTerm.length < 2) {
-        document.getElementById('resultsArea').innerHTML = 'Type more to search...';
-        return;
-    }*/
+		const links = document.getElementById("links");
+		links.style.display = "none";
+
+		if (searchTerm.length === 0) {
+			document.getElementById("resultsArea").innerHTML =
+				"Type more to search...";
+			return;
+		}
 
 		// Clear the existing timeout if it exists
 		if (timeout) clearTimeout(timeout);
@@ -310,7 +319,6 @@
 				searchTerm
 			)}&zipCode=${zipCode}`;
 			// console.log(endpoint);
-			const resultsArea = document.getElementById("resultsArea");
 
 			if (!resultsFound) resultsArea.innerHTML = "Loading...";
 
@@ -375,12 +383,14 @@
 					}
 					output += "</div>";
 
-					resultsArea.innerHTML = resultsFound
-						? output
-						: "<div>No results found.</div>";
-
-					// Set the overflow-y based on resultsFound
-					resultsArea.style.overflowY = resultsFound ? "scroll" : "none";
+					if (resultsFound) {
+						resultsArea.innerHTML = output;
+						resultsArea.style.display = "block";
+						resultsArea.style.overflowY = "scroll";
+					} else {
+						resultsArea.innerHTML = "<div>No results found.</div>";
+						resultsArea.style.overflowY = "none";
+					}
 				})
 				.catch((error) => {
 					console.error("Error fetching data:", error);
