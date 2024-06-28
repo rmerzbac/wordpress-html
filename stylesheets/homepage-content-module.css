@@ -115,11 +115,11 @@
 	height: auto;
 	min-height: 375px;
 }
-.container__txt.flex-container.flex-dir-column.align-justify {
+.home .container__txt.flex-container.flex-dir-column.align-justify {
 	width: 100%;
 	position: absolute;
 	top: auto;
-	bottom: 0;
+	bottom: 0 !important;
 	background: linear-gradient(
 		180deg,
 		rgba(26, 31, 34, 0) 0%,
