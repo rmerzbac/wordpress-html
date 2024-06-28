@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-.housingwire .hero-posts .tag-post-outer .featured-image .featured-overlay {
+/* .housingwire .hero-posts .tag-post-outer .featured-image .featured-overlay {
 	bottom: 0;
 	background: linear-gradient(
 		180deg,
@@ -11,7 +11,7 @@
 
 .home .tag-post-outer .featured-image .featured-overlay .read-now {
 	display: none;
-}
+} */
 
 .cx-flex-module[data-cx_zgn1] {
 	--cx-columns: 1;
